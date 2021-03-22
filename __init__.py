@@ -59,6 +59,7 @@ class Purchaseticket(MycroftSkill):
         elif (choice == "n"):
             self.speak("Thank you for purhcasing!\n")
 
+        conn.close()
         #self.speak_dialog('purchaseticket')
 
 
