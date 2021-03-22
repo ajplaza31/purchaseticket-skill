@@ -41,7 +41,7 @@ class Purchaseticket(MycroftSkill):
     
         cardNo = 0
         if (answer == "y"):
-        cardNo = (int)(input("Please enter your credit card number: \n"))
+            cardNo = (int)(input("Please enter your credit card number: \n"))
 
         cur.execute("SELECT * FROM Customer LIMIT 1 OFFSET ?", (n,))
         savedNo = cur.fetchall()
