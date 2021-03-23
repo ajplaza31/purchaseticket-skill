@@ -36,7 +36,7 @@ class Purchaseticket(MycroftSkill):
         idrow = cur.fetchone()
 
         self.speak('You are about to purchase the following ticket: \n')
-        self.speak(' {}. Start: {}  End: {}  ETA: {}  Cost: ${}.'format(m, 20, ticket[4], 20, ticket[5], 20, idrow[3], ticket[6]))
+        self.speak(' {}. Start: {}  End: {}  ETA: {}  Cost: ${}.'.format(m, 20, ticket[4], 20, ticket[5], 20, idrow[3], ticket[6]))
         answer = ask_yesno("Would you like to proceed? (y/n) ")
     
         cardNo = 0
