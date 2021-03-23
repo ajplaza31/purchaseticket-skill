@@ -24,7 +24,7 @@ class Purchaseticket(MycroftSkill):
             self.speak('Ticket {} starts at {}, ends at {}, has an E.T.A of {}, and costs {}.'.format(i, row[4], row[5], idrow[3], row[6]))
             i += 1
 
-        n = int(input("Which ticket would you like to select? \n"))
+        n = int(self.get_response('Which ticket would you like to select?'))
         m = n
         n = n - 1
 
@@ -35,7 +35,7 @@ class Purchaseticket(MycroftSkill):
 
         idrow = cur.fetchone()
 
-        self.speak("You are about to purchase the following ticket: \n")
+        self.speak('You are about to purchase the following ticket: \n')
         self.speak(" %d. Start: %-*s  End: %-*s  ETA: %-*s  Cost: $%s\n" % (m, 20, ticket[4], 20, ticket[5], 20, idrow[3], ticket[6]))
         answer = input("Would you like to proceed? (y/n)\n ")
     
