@@ -5,11 +5,7 @@ import random
 class Purchaseticket(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
-        conn = sqlite3.connect("cubic.sql")
-        cur = conn.cursor()
-        cur.execute("SELECT * FROM PassData")
-        rows = cur.fetchall()
-        
+        conn = sqlite3.connect("cubic.sql")   
 
     @intent_file_handler('purchaseticket.intent')
     def handle_purchaseticket(self, message):
