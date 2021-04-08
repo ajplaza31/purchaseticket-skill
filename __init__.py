@@ -38,7 +38,7 @@ class Purchaseticket(MycroftSkill):
 
         self.speak('You are about to purchase the following ticket: \n')
         self.speak(' {}. Start: {}  End: {}  ETA: {}  Cost: ${}.'.format(m, 20, ticket[4], 20, ticket[5], 20, idrow[3], ticket[6]))
-        answer = self.ask_yesno("Would you like to proceed? (yes/nno) ")
+        answer = self.ask_yesno("Would you like to proceed? (yes/no) ")
     
         cardNo = 0
         if (answer == "yes"):
