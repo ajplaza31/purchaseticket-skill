@@ -14,9 +14,11 @@ class Purchaseticket(MycroftSkill):
     @intent_file_handler('purchaseticket.intent')
     def handle_purchaseticket(self, message):
 
+        cur = conn.cursor()
+    
         cur.execute("SELECT * FROM PassData")
         rows = cur.fetchall()
-        
+
         self.speak('Here are the available tickets.')
         
         i=1
