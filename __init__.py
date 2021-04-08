@@ -7,6 +7,8 @@ class Purchaseticket(MycroftSkill):
         MycroftSkill.__init__(self)
         conn = sqlite3.connect("cubic.sql")
         cur = conn.cursor()
+        cur.execute("SELECT * FROM PassData")
+        rows = cur.fetchall()
         
 
     @intent_file_handler('purchaseticket.intent')
