@@ -62,7 +62,7 @@ class Purchaseticket(MycroftSkill):
         elif (choice == "no"):
             self.speak("Thank you for purchasing!")
 
-        #conn.close()
+        conn.close()
         #self.speak_dialog('purchaseticket')
 
 
