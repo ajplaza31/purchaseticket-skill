@@ -5,27 +5,23 @@ import random
 class Purchaseticket(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
+        conn = sqlite3.connect("cubic.sql")
+        cur = conn.cursor()
+        
 
     @intent_file_handler('purchaseticket.intent')
     def handle_purchaseticket(self, message):
-        
-        conn = sqlite3.connect("cubic.sql")
-        cur = conn.cursor()
-
-        cur.execute("SELECT * FROM PassData")
-        rows = cur.fetchall()
-        
-        i=1
-        
         self.speak('Here are the available tickets.')
         
+        i=1
+
         for row in rows:
             cur.execute("SELECT * FROM TransitLine WHERE LineID = ?", (row[3],))
             idrow = cur.fetchone()
             self.speak('Ticket {} starts at {}, ends at {}, has an E.T.A of {}, and costs {}.'.format(i, row[4], row[5], idrow[3], row[6]))
             i += 1
 
-        n = (int)(self.get_response('Which ticket would you like to select?'))
+        n = self.get_response('Which ticket would you like to select?')
         m = n
         n = n - 1
 
@@ -42,7 +38,7 @@ class Purchaseticket(MycroftSkill):
     
         cardNo = 0
         if (answer == "yes"):
-            cardNo = (int)(self.get_response('Please enter your credit card number: '))
+            cardNo = self.get_response('Please enter your credit card number: ')
 
         cur.execute("SELECT * FROM Customer WHERE SavedPaymentInfo = ?", (cardNo,))
         savedNo = cur.fetchone()
