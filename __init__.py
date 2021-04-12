@@ -21,10 +21,10 @@ class Purchaseticket(MycroftSkill):
         for row in rows:
             cur.execute("SELECT * FROM TransitLine WHERE LineID = ?", (row[3],))
             idrow = cur.fetchone()
-            self.speak('Ticket {} starts at {}, ends at {}, has an E.T.A of {}, and costs {}.'.format(i, row[4], row[5], idrow[3], row[6]))
+            self.speak('Ticket {} starts at {}, ends at {}, has an E.T.A of {}, and costs ${}.'.format(i, row[4], row[5], idrow[3], row[6]))
             i += 1
 
-        n = self.get_response('Which ticket would you like to select?')
+        n = int(self.get_response('Which ticket would you like to select?'))
         m = n
         n = n - 1
 
@@ -36,7 +36,7 @@ class Purchaseticket(MycroftSkill):
         idrow = cur.fetchone()
 
         self.speak('You are about to purchase the following ticket: \n')
-        self.speak(' {}. Start: {}  End: {}  ETA: {}  Cost: ${}.'.format(m, 20, ticket[4], 20, ticket[5], 20, idrow[3], ticket[6]))
+        self.speak(' {}. Start: {},  End: {},  ETA: {},  Cost: ${}.'.format(m, ticket[4], ticket[5], idrow[3], ticket[6]))
         answer = self.ask_yesno("Would you like to proceed? (yes/no) ")
     
         cardNo = 0
