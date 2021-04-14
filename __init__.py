@@ -29,7 +29,7 @@ class Purchaseticket(MycroftSkill):
             i += 1
 
         pickedTicket = self.ask_selection(ticketlist, 'Which ticket would you like to select?')
-       
+        m = ticketlist.index(pickedTicket) + 1
 
         cur.execute("SELECT * FROM PassData LIMIT 1 OFFSET ?", (ticketlist.index(pickedTicket),))
         ticket = cur.fetchone()
