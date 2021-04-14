@@ -28,11 +28,10 @@ class Purchaseticket(MycroftSkill):
             ticketlist.append(ticketNo)
             i += 1
 
-        n = self.ask_selection(ticketlist, 'Which ticket would you like to select?')
-        m = n
-        n = n - 1
+        pickedTicket = self.ask_selection(ticketlist, 'Which ticket would you like to select?')
+       
 
-        cur.execute("SELECT * FROM PassData LIMIT 1 OFFSET ?", (n,))
+        cur.execute("SELECT * FROM PassData LIMIT 1 OFFSET ?", (ticketlist.index(pickedTicket),))
         ticket = cur.fetchone()
 
         cur.execute("SELECT * FROM TransitLine WHERE LineID = ?", (ticket[3],))
