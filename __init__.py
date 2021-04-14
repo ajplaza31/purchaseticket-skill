@@ -27,24 +27,29 @@ class Purchaseticket(MycroftSkill):
             ticketNo = "Ticket " + str(i)
             ticketlist.append(ticketNo)
             i += 1
+        
+        answer = "no"
+        while (answer == "no"):
+            pickedTicket = self.ask_selection(ticketlist, 'Which ticket would you like to select?')
+            m = ticketlist.index(pickedTicket) + 1
 
-        pickedTicket = self.ask_selection(ticketlist, 'Which ticket would you like to select?')
-        m = ticketlist.index(pickedTicket) + 1
+            cur.execute("SELECT * FROM PassData LIMIT 1 OFFSET ?", (ticketlist.index(pickedTicket),))
+            ticket = cur.fetchone()
 
-        cur.execute("SELECT * FROM PassData LIMIT 1 OFFSET ?", (ticketlist.index(pickedTicket),))
-        ticket = cur.fetchone()
+            cur.execute("SELECT * FROM TransitLine WHERE LineID = ?", (ticket[3],))
 
-        cur.execute("SELECT * FROM TransitLine WHERE LineID = ?", (ticket[3],))
+            idrow = cur.fetchone()
 
-        idrow = cur.fetchone()
-
-        self.speak('You are about to purchase the following ticket: \n')
-        self.speak(' {}. Start: {},  End: {},  ETA: {},  Cost: ${}.'.format(m, ticket[4], ticket[5], idrow[3], ticket[6]))
-        answer = self.ask_yesno("Would you like to proceed? (yes/no) ")
+            self.speak('You are about to purchase the following ticket: \n')
+            self.speak(' {}. Start: {},  End: {},  ETA: {},  Cost: ${}.'.format(m, ticket[4], ticket[5], idrow[3], ticket[6]))
+            answer = self.ask_yesno("Would you like to proceed? (yes/no) ")
     
-        cardNo = 0
-        if (answer == "yes"):
-            cardNo = self.get_response('Please enter your credit card number: ')
+            cardNo = 0
+            if (answer == "yes"):
+                cardNo = self.get_response('Please enter your credit card number: ')
+                break
+            
+            
 
         cur.execute("SELECT * FROM Customer WHERE SavedPaymentInfo = ?", (cardNo,))
         savedNo = cur.fetchone()
