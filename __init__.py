@@ -15,6 +15,8 @@ class Purchaseticket(MycroftSkill):
         rows = cur.fetchall()
 
         self.speak('Here are the available tickets.')
+
+        ticketlist = []
         
         i=1
 
@@ -22,9 +24,11 @@ class Purchaseticket(MycroftSkill):
             cur.execute("SELECT * FROM TransitLine WHERE LineID = ?", (row[3],))
             idrow = cur.fetchone()
             self.speak('Ticket {} starts at {}, ends at {}, has an E.T.A of {}, and costs ${}.'.format(i, row[4], row[5], idrow[3], row[6]))
+            ticketNo = "Ticket " + str(i)
+            ticketlist.append(ticketNo)
             i += 1
 
-        n = self.ask_selection(rows, 'Which ticket would you like to select?')
+        n = self.ask_selection(ticketlist, 'Which ticket would you like to select?')
         m = n
         n = n - 1
 
