@@ -24,7 +24,7 @@ class Purchaseticket(MycroftSkill):
             self.speak('Ticket {} starts at {}, ends at {}, has an E.T.A of {}, and costs ${}.'.format(i, row[4], row[5], idrow[3], row[6]))
             i += 1
 
-        n = int(self.get_response('Which ticket would you like to select?'))
+        n = self.ask_selection(rows, 'Which ticket would you like to select?')
         m = n
         n = n - 1
 
