@@ -32,7 +32,7 @@ class Purchaseticket(MycroftSkill):
         
         answer = "no"
         while (answer == "no"):
-            pickedTicket = self.ask_selection(ticketlist, 'Which ticket would you like to select?')
+            pickedTicket = self.ask_selection(list(ticketlist), 'Which ticket would you like to select?')
             m = ticketlist.index(pickedTicket) + 1
 
             cur.execute("SELECT * FROM PassData LIMIT 1 OFFSET ?", (ticketlist.index(pickedTicket),))
