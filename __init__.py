@@ -2,6 +2,7 @@ from mycroft import MycroftSkill, intent_file_handler
 import sqlite3
 import random
 import time
+from collections import deque
 
 class Purchaseticket(MycroftSkill):
     def __init__(self):
@@ -17,7 +18,7 @@ class Purchaseticket(MycroftSkill):
 
         self.speak('Here are the available tickets.')
 
-        ticketlist = []
+        ticketlist = deque([])
         
         i=1
 
