@@ -1,6 +1,7 @@
 from mycroft import MycroftSkill, intent_file_handler
 import sqlite3
 import random
+import time
 
 class Purchaseticket(MycroftSkill):
     def __init__(self):
@@ -44,13 +45,15 @@ class Purchaseticket(MycroftSkill):
             self.speak(' {}. Start: {},  End: {},  ETA: {},  Cost: ${}.'.format(m, ticket[4], ticket[5], idrow[3], ticket[6]))
             answer = self.ask_yesno("Would you like to proceed? (yes/no) ")
     
-            cardNo = 0
+            #cardNo = 0
             if (answer == "yes"):
-                cardNo = self.get_response('Please enter your credit card number: ')
+                self.speak('Please enter your credit card number: ')
+                time.sleep(5)
+                self.speak('Thank you for purchasing! ')
                 break
             
             
-
+        '''        
         cur.execute("SELECT * FROM Customer WHERE SavedPaymentInfo = ?", (cardNo,))
         savedNo = cur.fetchone()
         choice = ""
@@ -69,6 +72,7 @@ class Purchaseticket(MycroftSkill):
         elif (choice == "no"):
             self.speak("Thank you for purchasing!")
 
+        '''
         conn.close()
         #self.speak_dialog('purchaseticket')
 
