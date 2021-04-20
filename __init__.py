@@ -54,7 +54,7 @@ class Purchaseticket(MycroftSkill):
                 while (isValid == 0):
                     digitList = self.extract_numbers('What is your Customer ID? ')
                     idString = "".join(map(str, digitList))
-                    idNumber = (int)idString
+                    idNumber = (int)idString.strip()
                 
                     cur.execute("SELECT * FROM Customer WHERE CustomerID = ?", (idNumber,))
                     customer = cur.fetchone()
