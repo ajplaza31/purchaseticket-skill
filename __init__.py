@@ -51,7 +51,8 @@ class Purchaseticket(MycroftSkill):
             #cardNo = 0
             if (answer == "yes"):
                 while (isValid == 0):
-                    idNumber = (int)(self.get_response('What is your Customer ID? '))
+                    idString = self.get_response('What is your Customer ID? '))
+                    idNumber = (int)(idString.strip())
                 
                     cur.execute("SELECT * FROM Customer WHERE CustomerID = ?", (idNumber,))
                     customer = cur.fetchone()
