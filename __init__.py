@@ -46,34 +46,33 @@ class Purchaseticket(MycroftSkill):
             self.speak(' {}. Start: {},  End: {},  ETA: {},  Cost: ${}.'.format(m, ticket[4], ticket[5], idrow[3], ticket[6]))
             answer = self.ask_yesno("Would you like to proceed? (yes/no) ")
     
+            digitList = []
+            idNumber = 0
+            isValid = 0
             #cardNo = 0
             if (answer == "yes"):
-                self.speak('Please enter your credit card number: ')
-                time.sleep(5)
+                while (isValid == 0):
+                    digitList = self.extract_numbers('What is your Customer ID? ')
+                    idString = "".join(map(str, digitList))
+                    idNumber = (int)idString
+                
+                    cur.execute("SELECT * FROM Customer WHERE CustomerID = ?", (idNumber,))
+                    customer = cur.fetchone()
+
+                    if (customer != None):
+                        self.speak('Purchasing ticket from {} to {} for ${}'.format(ticket[4], ticket[5], ticket[6]))
+                        newBalance = customer[3] - ticket[6]
+                        self.speak('Your new account balance is ${}'.format(newBalance))
+                        cur.execute('UPDATE Customer SET Balance = ? WHERE CustomerID =?', (newBalance, idNumber))
+                        conn.commit()
+                        isValid = 1
+                        break
+                    elif (customer == None):
+                        self.speak('That ID is not in the system. Please try again')
+                
                 self.speak('Thank you for purchasing! ')
                 break
             
-            
-        '''        
-        cur.execute("SELECT * FROM Customer WHERE SavedPaymentInfo = ?", (cardNo,))
-        savedNo = cur.fetchone()
-        choice = ""
-
-        if (savedNo != None):
-            choice = self.ask_yesno("Would you like to save your payment info? (y/n)")
-        elif (savedNo == None):
-            self.speak("Thank you for purchasing!")
-
-        if (choice == "yes"):
-            name = self.get_response("What is your name? \n")
-            customerNo = random.randint(11,10000)
-            cur.execute("INSERT INTO Customer(CustomerID, SavedPaymentInfo, Name) VALUES(?, ?, ?)", (customerNo, cardNo, name))
-            conn.commit()
-            self.speak("Thank you for purchasing!")
-        elif (choice == "no"):
-            self.speak("Thank you for purchasing!")
-
-        '''
         conn.close()
         #self.speak_dialog('purchaseticket')
 
