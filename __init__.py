@@ -46,15 +46,12 @@ class Purchaseticket(MycroftSkill):
             self.speak(' {}. Start: {},  End: {},  ETA: {},  Cost: ${}.'.format(m, ticket[4], ticket[5], idrow[3], ticket[6]))
             answer = self.ask_yesno("Would you like to proceed? (yes/no) ")
     
-            digitList = []
             idNumber = 0
             isValid = 0
             #cardNo = 0
             if (answer == "yes"):
                 while (isValid == 0):
-                    digitList = self.extract_numbers('What is your Customer ID? ')
-                    idString = "".join(map(str, digitList))
-                    idNumber = (int)(idString.strip())
+                    idNumber = (int)(self.get_response('What is your Customer ID? '))
                 
                     cur.execute("SELECT * FROM Customer WHERE CustomerID = ?", (idNumber,))
                     customer = cur.fetchone()
