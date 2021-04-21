@@ -56,7 +56,7 @@ class Purchaseticket(MycroftSkill):
             #cardNo = 0
             if (answer == "yes"):
                 while (isValid == 0):
-                    idNumber = (int)((self.get_response('What is your Customer ID? ')).replace(" ", ""))
+                    idNumber = (int)(self.get_response('What is your Customer ID? ').replace(" ", ""))
                     '''
                     digitList = self.extract_numbers(idString, True, False, None)
                     newString = "".join(map(str, digitList))
