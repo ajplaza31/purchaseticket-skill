@@ -50,11 +50,15 @@ class Purchaseticket(MycroftSkill):
             answer = self.ask_yesno("Would you like to proceed? (yes/no) ")
     
             idNumber = 0
+            idString = ""
             isValid = 0
+            digitList = []
             #cardNo = 0
             if (answer == "yes"):
                 while (isValid == 0):
-                    idNumber = (int)(self.get_response('What is your Customer ID? '))
+                    digitList = (list)(self.get_response('What is your Customer ID? '))
+                    idString = "".join(map(str, digitList))
+                    idNumber = (int)idString
 
                     cur.execute("SELECT * FROM Customer WHERE CustomerID = ?", (idNumber,))
                     customer = cur.fetchone()
