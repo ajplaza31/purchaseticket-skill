@@ -18,7 +18,7 @@ class Purchaseticket(MycroftSkill):
 
         self.speak('Here are the available tickets.')
 
-        ticketlist = deque([])
+        #ticketlist = deque([])
         
         i=1
 
@@ -26,16 +26,19 @@ class Purchaseticket(MycroftSkill):
             cur.execute("SELECT * FROM TransitLine WHERE LineID = ?", (row[3],))
             idrow = cur.fetchone()
             self.speak('Ticket {} starts at {}, ends at {}, has an E.T.A of {}, and costs ${}.'.format(i, row[4], row[5], idrow[3], row[6]))
-            ticketNo = "Ticket " + str(i)
-            ticketlist.append(ticketNo)
+            #ticketNo = "Ticket " + str(i)
+            #ticketlist.append(ticketNo)
             i += 1
         
         answer = "no"
         while (answer == "no"):
-            pickedTicket = self.ask_selection(list(ticketlist), 'Which ticket would you like to select?')
-            m = ticketlist.index(pickedTicket) + 1
+            #pickedTicket = self.ask_selection(list(ticketlist), 'Which ticket would you like to select?')
+            #m = ticketlist.index(pickedTicket) + 1
+            n = (int)(self.get_response('Which ticket would you like to select? '))
+            m = n
+            n = n - 1
 
-            cur.execute("SELECT * FROM PassData LIMIT 1 OFFSET ?", (ticketlist.index(pickedTicket),))
+            cur.execute("SELECT * FROM PassData LIMIT 1 OFFSET ?", (n,))
             ticket = cur.fetchone()
 
             cur.execute("SELECT * FROM TransitLine WHERE LineID = ?", (ticket[3],))
